@@ -1,0 +1,11 @@
+{ //Opciones genéricas para utilizar typeScript
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "moduleResolution": "node",
+        "target": "es6",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
+        }
+    }
