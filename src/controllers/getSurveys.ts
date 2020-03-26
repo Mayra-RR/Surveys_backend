@@ -1,15 +1,33 @@
 import { Request, Response } from "express";
 import con from "../connection/connection";
+import { findSurveyQuery } from "../querys/findSurvey";
 
 export default (req: Request, res: Response) => {
-    console.log(req.params.id);
+    let data = {
+        id: null,
+        description: null,
+        questions: [],
+    };
     
     const id = req.params.id;
-    con.query(`SELECT surveys.description, surveys.survey_id, questions.question, questions.type, questions.options, questions.question_id FROM surveys RIGHT JOIN questions ON surveys.survey_id = (questions.survey_id=${id})`, function(err, result, fields){
+    con.query(findSurveyQuery(id), function(err, result, fields){
         if (err){
             throw err;
         } else{
-            res.status(200).send(result);
+            result.forEach( (row, i) => {
+                if( i === 0){
+                    data.id = row.survey_id; 
+                    data.description = row.description;
+                } 
+                data.questions.push({ 
+                    id: row.question_id,
+                    question: row.question,
+                    type: row.type,
+                    options: row.options.split(/\,\s?/)
+                })
+            })
+            res.status(200).send(data);
+           /*  console.log(result); */
         }
     })
 };
