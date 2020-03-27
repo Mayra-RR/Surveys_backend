@@ -9,6 +9,9 @@ const updateResult =
  SET answer = ":answer"
  WHERE result_id = :id;`;
 
+ const resultQuery =
+ 'SELECT * FROM result;';
+
 export function insertResultQuery(survey_id: string, data: any[]){
     /* return insertResult.replace(':id', id); */
 
@@ -19,7 +22,7 @@ export function insertResultQuery(survey_id: string, data: any[]){
     }, 
     ""
     );
-    return insertResult.replace(':values', values);
+    return insertResult.replace(':values', values) + resultQuery;
 }
 
 export function updateResultQuery(survey_id: string, data: any[] ){
@@ -28,8 +31,8 @@ export function updateResultQuery(survey_id: string, data: any[] ){
 
         acc += updateResult.replace(':answer', current.answer).replace(':id', survey_id)+'\n';
         
-        return acc;
+        return acc ;
     },
     ""
-    )
-}
+    ) + resultQuery;
+};
