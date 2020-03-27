@@ -7,7 +7,7 @@ const router: Router = express.Router();
 
 router.get('/getSurveys/:id', getSurveys);
 /* router.get('/getquestions', getquestions); */
-router.post('/postSurvey', postSurvey);
+router.post('/postSurvey/:survey_id', postSurvey);
 /*router.delete('/delete/:id', deleteSurvey); */
 
 export default router;
